@@ -5,12 +5,13 @@ using UnityEngine;
 public class DoorTrigger : MonoBehaviour
 {
 
-    
+    public enum TriggerTypes { copy, next, finish }
     private RoomManager roomManager;
     //public float xOffset;
     //public float zOffset;
     //public RoomManager.direction doorToRemove;
     public RoomManager.direction direction;
+    public TriggerTypes triggerType; 
 
 
     private void Awake()
@@ -30,7 +31,22 @@ public class DoorTrigger : MonoBehaviour
         }
 
         //Action to spawn room
-        RoomAction.spawnRoom(direction);
+
+        switch (triggerType)
+        {
+            case (TriggerTypes.copy):
+                RoomAction.spawnCopyRoom(direction);
+                break;
+            case (TriggerTypes.next):
+                RoomAction.spawnNextRoom(direction);
+                break;
+            case (TriggerTypes.finish):
+                RoomAction.finishArea(direction);
+                break;
+            default:
+                RoomAction.spawnCopyRoom(direction);
+                break;
+        }
 
         //remove door player went through
         gameObject.SetActive(false);
