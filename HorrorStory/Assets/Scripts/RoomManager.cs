@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RoomManager : MonoBehaviour
 {
@@ -22,16 +23,23 @@ public class RoomManager : MonoBehaviour
     private int currentRoomZ = 50;
     private Room currentRoom;
     private bool roomLevelIsComplete;
+    private NavMeshRuntimeBuilder navMeshBuilder; 
+   
 
     private void OnEnable()
     {
-        RoomAction.spawnRoom += InstantiateNewRoom; 
+        RoomAction.spawnCopyRoom += InstantiateNewRoom;
+        RoomAction.spawnNextRoom += AdvanceRoom;
+        RoomAction.finishArea += FinishArea;
 
     }
 
     private void OnDisable()
     {
-        RoomAction.spawnRoom -= InstantiateNewRoom;
+        RoomAction.spawnCopyRoom -= InstantiateNewRoom;
+        RoomAction.spawnNextRoom -= AdvanceRoom;
+        RoomAction.finishArea -= FinishArea;
+
     }
 
 
@@ -45,6 +53,8 @@ public class RoomManager : MonoBehaviour
         {
             _instance = this;
         }
+        navMeshBuilder = FindObjectOfType<NavMeshRuntimeBuilder>();
+
     }
 
     void Start()
@@ -71,7 +81,9 @@ public class RoomManager : MonoBehaviour
         currentRoomX = 50;
         currentRoomZ = 50; 
         currentPrefabIndex = 0;
-        roomLevelIsComplete = false; 
+        roomLevelIsComplete = false;
+        navMeshBuilder.AddSurfaces(currentRoom.GetSurfaces());
+        navMeshBuilder.RecalculateNavMesh();
 
     }
 
@@ -83,16 +95,15 @@ public class RoomManager : MonoBehaviour
         return null; 
     }
 
-    public bool AdvanceRoom()
+    public void AdvanceRoom(direction direction)
     {
+
         currentPrefabIndex += 1; 
         if (currentPrefabIndex >= totalRooms)
         {
             roomLevelIsComplete = true;
-            return false;
         }
-
-        return true;
+        InstantiateNewRoom(direction);
     }
 
 
@@ -171,6 +182,9 @@ public class RoomManager : MonoBehaviour
         rooms[currentRoomX, currentRoomZ] = room;
 
         RemoveConnectingDoors();
+        navMeshBuilder.AddSurfaces(currentRoom.GetSurfaces());
+        navMeshBuilder.RecalculateNavMesh();
+
     }
 
 
@@ -255,5 +269,10 @@ public class RoomManager : MonoBehaviour
         return rooms[currentRoomX - 1, currentRoomZ];
 
     }
+    private void FinishArea(direction dir)
+    {
+        //what to do?
+    }
+
 
 }

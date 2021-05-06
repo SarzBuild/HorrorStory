@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+
 
 public class Room : MonoBehaviour
 {
@@ -8,9 +10,11 @@ public class Room : MonoBehaviour
     public GameObject northDoor;
     public GameObject eastDoor;
     public GameObject southDoor;
-    public GameObject westDoor; 
+    public GameObject westDoor;
 
+    public List<NavMeshSurface> navMeshSurfaces;
     
+
     //ensure all doors are active to start
     public void initializeClone()
     {
@@ -21,6 +25,10 @@ public class Room : MonoBehaviour
 
     }
 
+    public List <NavMeshSurface> GetSurfaces()
+    {
+        return navMeshSurfaces;
+    }
     public void RemoveNorthDoor()
     {
         northDoor.SetActive(false);
