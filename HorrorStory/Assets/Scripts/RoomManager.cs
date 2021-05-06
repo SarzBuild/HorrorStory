@@ -10,7 +10,9 @@ public class RoomManager : MonoBehaviour
     public static RoomManager Instance { get { return _instance; } }
 
     public enum direction {north, south, east, west};
-    public Room startingRoom; 
+    public Transform firstRoomLocation;
+    public direction firstRoomOpenDoorDirection;
+    //public Room startingRoom; 
     public GameObject[] prefabs;
     public int totalRooms = 1;
     public float roomDimention = 41.838f; 
@@ -65,16 +67,16 @@ public class RoomManager : MonoBehaviour
         {
             for (int j = 0; j < 100; j++)
             {
-                if(i == 50 && j == 50)
-                {
-                    roomLocatedAt[i, j] = true;
-                    rooms[i, j] = startingRoom;
-                    currentRoom = startingRoom;
-                } else
-                {
+              //  if(i == 50 && j == 50)
+              //  {
+                    //roomLocatedAt[i, j] = true;
+                    //rooms[i, j] = startingRoom;
+                    //currentRoom = startingRoom;
+                //} else
+               // {
                     roomLocatedAt[i, j] = false;
                     rooms[i, j] = null;
-                }
+               // }
 
             }
         }
@@ -82,9 +84,20 @@ public class RoomManager : MonoBehaviour
         currentRoomZ = 50; 
         currentPrefabIndex = 0;
         roomLevelIsComplete = false;
-        navMeshBuilder.AddSurfaces(currentRoom.GetSurfaces());
-        navMeshBuilder.RecalculateNavMesh();
 
+        CreateStartingRoom();
+        //navMeshBuilder.AddSurfaces(currentRoom.GetSurfaces());
+        //navMeshBuilder.RecalculateNavMesh();
+
+    }
+
+    private void SetCurrentRoomFromTransform(Transform roomTransform)
+    {
+        int deltaX = Mathf.FloorToInt(roomTransform.position.x / roomDimention);
+        int deltaZ = Mathf.FloorToInt(roomTransform.position.z / roomDimention);
+        currentRoomX = 50 + deltaX;
+        currentRoomZ = 50 + deltaZ;
+        currentRoom = rooms[currentRoomX, currentRoomZ];
     }
 
     public GameObject GetCurrentPrefab()
@@ -95,7 +108,7 @@ public class RoomManager : MonoBehaviour
         return null; 
     }
 
-    public void AdvanceRoom(direction direction)
+    public void AdvanceRoom(direction direction, Transform roomTransform)
     {
 
         currentPrefabIndex += 1; 
@@ -103,7 +116,7 @@ public class RoomManager : MonoBehaviour
         {
             roomLevelIsComplete = true;
         }
-        InstantiateNewRoom(direction);
+        InstantiateNewRoom(direction, roomTransform);
     }
 
 
@@ -121,12 +134,26 @@ public class RoomManager : MonoBehaviour
 
     }
 
+    public void CreateStartingRoom()
+    {
+        GameObject roomPrefab = prefabs[currentPrefabIndex];
+        GameObject spawnedRoom = Instantiate(roomPrefab) as GameObject;
+        spawnedRoom.transform.position = firstRoomLocation.position;
+        Room room = spawnedRoom.GetComponent<Room>();
 
-    public void InstantiateNewRoom(direction directionOfSpawnedRoom)
+        room.initializeClone();
+        room.RemoveSpecificDoor(firstRoomOpenDoorDirection);
+        currentRoom = room;
+        AssignNewRoom(0, 0, room);
+
+    }
+    public void InstantiateNewRoom(direction directionOfSpawnedRoom, Transform roomTransform)
     {
         Debug.Log("Instantiating a room");
 
         if (roomLevelIsComplete) return;
+
+        SetCurrentRoomFromTransform(roomTransform);
 
         direction reverseDirectionOfSpawnedRoom = ReverseTheDirection(directionOfSpawnedRoom);
 
@@ -182,8 +209,8 @@ public class RoomManager : MonoBehaviour
         rooms[currentRoomX, currentRoomZ] = room;
 
         RemoveConnectingDoors();
-        navMeshBuilder.AddSurfaces(currentRoom.GetSurfaces());
-        navMeshBuilder.RecalculateNavMesh();
+       // navMeshBuilder.AddSurfaces(currentRoom.GetSurfaces());
+       // navMeshBuilder.RecalculateNavMesh();
 
     }
 
@@ -223,14 +250,14 @@ public class RoomManager : MonoBehaviour
 
     private bool HasRoomToNorth()
     {
-        if (roomLocatedAt[currentRoomX, currentRoomZ - 1]) return true;
+        if (roomLocatedAt[currentRoomX, currentRoomZ + 1]) return true;
 
         return false;
     }
 
     private bool HasRoomToSouth()
     {
-        if (roomLocatedAt[currentRoomX, currentRoomZ + 1]) return true;
+        if (roomLocatedAt[currentRoomX, currentRoomZ - 1]) return true;
 
         return false;
     }
@@ -251,12 +278,12 @@ public class RoomManager : MonoBehaviour
 
     private Room GetRoomToNorth()
     {
-        return rooms[currentRoomX, currentRoomZ - 1];
+        return rooms[currentRoomX, currentRoomZ + 1];
     }
 
     private Room GetRoomToSouth()
     {
-        return rooms[currentRoomX, currentRoomZ + 1];
+        return rooms[currentRoomX, currentRoomZ - 1];
 
     }
     private Room GetRoomToEast()
@@ -269,7 +296,7 @@ public class RoomManager : MonoBehaviour
         return rooms[currentRoomX - 1, currentRoomZ];
 
     }
-    private void FinishArea(direction dir)
+    private void FinishArea(direction dir, Transform roomTransform)
     {
         //what to do?
     }

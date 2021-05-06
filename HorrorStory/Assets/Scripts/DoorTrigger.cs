@@ -11,8 +11,8 @@ public class DoorTrigger : MonoBehaviour
     //public float zOffset;
     //public RoomManager.direction doorToRemove;
     public RoomManager.direction direction;
-    public TriggerTypes triggerType; 
-
+    public TriggerTypes triggerType;
+    public Transform room; 
 
     private void Awake()
     {
@@ -35,16 +35,16 @@ public class DoorTrigger : MonoBehaviour
         switch (triggerType)
         {
             case (TriggerTypes.copy):
-                RoomAction.spawnCopyRoom(direction);
+                RoomAction.spawnCopyRoom(direction, room);
                 break;
             case (TriggerTypes.next):
-                RoomAction.spawnNextRoom(direction);
+                RoomAction.spawnNextRoom(direction, room);
                 break;
             case (TriggerTypes.finish):
-                RoomAction.finishArea(direction);
+                RoomAction.finishArea(direction, room);
                 break;
             default:
-                RoomAction.spawnCopyRoom(direction);
+                RoomAction.spawnCopyRoom(direction, room);
                 break;
         }
 

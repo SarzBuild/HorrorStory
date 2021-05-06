@@ -6,8 +6,8 @@ using System;
 
 public static class RoomAction
 {
-    public static Action <RoomManager.direction >spawnCopyRoom;
-    public static Action<RoomManager.direction> spawnNextRoom;
-    public static Action<RoomManager.direction> finishArea;
+    public static Action <RoomManager.direction, Transform >spawnCopyRoom;
+    public static Action<RoomManager.direction, Transform> spawnNextRoom;
+    public static Action<RoomManager.direction, Transform> finishArea;
 
 }

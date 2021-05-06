@@ -12,7 +12,7 @@ public class Room : MonoBehaviour
     public GameObject southDoor;
     public GameObject westDoor;
 
-    public List<NavMeshSurface> navMeshSurfaces;
+    //public List<NavMeshSurface> navMeshSurfaces;
     
 
     //ensure all doors are active to start
@@ -25,10 +25,10 @@ public class Room : MonoBehaviour
 
     }
 
-    public List <NavMeshSurface> GetSurfaces()
-    {
-        return navMeshSurfaces;
-    }
+    //public List <NavMeshSurface> GetSurfaces()
+   // {
+   //     return navMeshSurfaces;
+   // }
     public void RemoveNorthDoor()
     {
         northDoor.SetActive(false);
