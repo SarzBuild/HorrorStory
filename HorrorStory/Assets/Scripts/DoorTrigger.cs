@@ -5,51 +5,62 @@ using UnityEngine;
 public class DoorTrigger : MonoBehaviour
 {
 
-    public enum TriggerTypes { copy, next, finish }
-    private RoomManager roomManager;
-    //public float xOffset;
-    //public float zOffset;
-    //public RoomManager.direction doorToRemove;
-    public RoomManager.direction direction;
+    public enum TriggerTypes { copy, next, finish, locked }
     public TriggerTypes triggerType;
-    public Transform room; 
+    private Transform initialTransform; 
+    private bool playerHasEntered; 
+
 
     private void Awake()
     {
-        roomManager = GameObject.FindObjectOfType<RoomManager>();
+        playerHasEntered = false;
+        initialTransform = transform; 
     }
 
 
+    public void Reset()
+    {
+        playerHasEntered = false;
+        transform.position = initialTransform.position;
+        transform.rotation = initialTransform.rotation;
+    }
 
-
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
         
-        if (other.transform.tag != "Player")
+        if (collision.collider.transform.tag != "Player" || playerHasEntered)
         {
             return;
         }
+        playerHasEntered = true;
 
         //Action to spawn room
+
+        Debug.Log(initialTransform.position);
+        Debug.Log(initialTransform.rotation);
 
         switch (triggerType)
         {
             case (TriggerTypes.copy):
-                RoomAction.spawnCopyRoom(direction, room);
+                RoomAction.spawnCopyRoom(initialTransform);
                 break;
             case (TriggerTypes.next):
-                RoomAction.spawnNextRoom(direction, room);
+                RoomAction.spawnNextRoom(initialTransform);
                 break;
             case (TriggerTypes.finish):
-                RoomAction.finishArea(direction, room);
+                RoomAction.finishArea(initialTransform);
+                break;
+            case (TriggerTypes.locked):
                 break;
             default:
-                RoomAction.spawnCopyRoom(direction, room);
                 break;
         }
 
-        //remove door player went through
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
+
+    
+
+    //open the door or let the hinge / rigidbody handle it
 
 }
