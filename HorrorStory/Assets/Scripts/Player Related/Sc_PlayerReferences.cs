@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Sc_PlayerReferences : MonoBehaviour
 {
@@ -15,16 +16,25 @@ public class Sc_PlayerReferences : MonoBehaviour
     public float runningSpeed;
     public bool isDead;
     public bool isInCutscene;
-    public bool asedas;
     public float gravity;
     public Vector3 moveTowardsPos;
     public float jumpAndFallVelocity;
+    public float interactionDistance;
+    public bool successfulHit;
+    public bool hasLens;
+    public bool lensShowing;
+    public bool firstUseLens;
     #endregion
 
     #region Component variable list
     public Camera mainCamera;
     public Rigidbody rb;
     public Collider collider;
+    public TMPro.TextMeshProUGUI interactionText;
+    public GameObject holdButton;
+    public UnityEngine.UI.Image holdButtonProgress;
+    public GameObject lensGameObject;
+    
     public LayerMask groundLayerMask;
     #endregion
 
@@ -52,6 +62,10 @@ public class Sc_PlayerReferences : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         collider = gameObject.GetComponent<Collider>();
         mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        interactionText = GameObject.FindWithTag("InteractionUI").GetComponent<TMPro.TextMeshProUGUI>();
+        lensGameObject = GameObject.FindWithTag("Lens");
+        holdButton = GameObject.FindWithTag("HoldButtonUI");
+        holdButtonProgress = GameObject.FindWithTag("ProgressUI").GetComponent<Image>();
 
     }
 }

@@ -72,11 +72,35 @@ public class Sc_PlayerInputs : MonoBehaviour
         return false;
     }
 
+    public bool GetRightClick()
+    {
+        if (!lockPlayer)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool GetLeftClick()
+    {
+        if (!lockPlayer)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public bool GetInteraction()
     {
         if (!lockPlayer)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKey(KeyCode.E))
             {
                 return true;
             }
@@ -95,12 +119,14 @@ public class Sc_PlayerInputs : MonoBehaviour
         }
         return false;
     }
-
+    
+    //Locks the player making it unable to input anything
     public void SetLockPlayer()
     {
         lockPlayer = !lockPlayer;
     }
     
+    //Updates the player cursor if there's need to.
     public void SetLockPlayerCursorVisibility()
     {
         cursorVisibility = !cursorVisibility;
