@@ -26,10 +26,9 @@ namespace UnityCore
                 public AudioType type;
                 public AudioClip clip;  //Store the actual music/effect
                 [Range(0f, 1f)]         //limit the range in the Unity editor
-                public float volume;    //Store our volume
+                public float volume = 1.0f;    //Store our volume
                 [Range(0.1f, 3f)]       //Limit the Range again
-                public float pitch;     // set the picth for our music/effect
-                [HideInInspector]       //Hide this variable from the Editor
+                public float pitch = 1.0f;     // set the picth for our music/effect
                 public bool loop = false;// should this sound loop 
             }
                 [System.Serializable]
@@ -129,10 +128,13 @@ namespace UnityCore
                 }
             private IEnumerator RunAudioJob(AudioJob _job)
             {
-                yield return new WaitForSeconds(_job.delay);
+
+                //if (_job.delay != null) yield return _job.delay; // new WaitForSeconds(_job.delay);
+                                                                 //yield return new WaitForSeconds(_job.delay);
+                Debug.Log("type " +  _job.action.ToString() + "fade ? " + _job.fade.ToString() + " delay ? " + (_job.delay));
 
 
-                AudioTrack _track = (AudioTrack)m_AudioTable[_job.type];
+                AudioTrack _track = GetAudioTrack(_job.type);// (AudioTrack)m_AudioTable[_job.type];
                 AudioObject _jobSource = GetAudioObjectFromAudioTrack(_job.type, _track);
                 _track.source.clip = _jobSource.clip;//GetAudioClipFromAudioTrack(_job.type, _track);
 
@@ -148,6 +150,8 @@ namespace UnityCore
                         _track.source.Play();
                         break;
                     case AudioAction.STOP:
+                        Debug.Log("Why");
+
                         if (!_job.fade)
                         {
                             _track.source.Stop();
@@ -165,17 +169,19 @@ namespace UnityCore
                 {
                     float _initial = (_job.action == AudioAction.START || _job.action == AudioAction.RESTART) ? 0.0f : _jobSource.volume;
                     float _target = _initial == 0 ? _jobSource.volume : 0.0f;
-                    float _duration = 1.0f;
-                    float _timer = 0.0f; 
-
+                    float _duration = 1.0f; 
+                    float _timer = 0.0f;
+                    Debug.Log("initial " + _initial + " target " + _target + " duration: " + _duration + " timer " + _timer );
                     while (_timer <= _duration)
                     {
                         _track.source.volume = Mathf.Lerp(_initial, _target, _timer / _duration);
                         _timer += Time.deltaTime;
+                        if (_job.action == AudioAction.STOP) Debug.Log(_target);
                         yield return null;
                     }
+                    Debug.Log("initial " + _initial + " target " + _target + " duration: " + _duration + " timer " + _timer);
 
-                    if(_job.action == AudioAction.STOP)
+                    if (_job.action == AudioAction.STOP)
                     {
                         _track.source.Stop();
                     }
@@ -192,8 +198,8 @@ namespace UnityCore
                 {
                     //remove conflicting jobs
                     RemoveConflictingJobs(_job.type);
-                    //start job
-                    IEnumerator _jobRunner = RunAudioJob(_job);
+                //start job
+                    Coroutine _jobRunner = StartCoroutine(RunAudioJob(_job));
                     m_JobTable.Add(_job.type, _jobRunner);
                     Log("Starting job on [" + _job.type + "] with operation: " + _job.action);
                 }
@@ -205,7 +211,7 @@ namespace UnityCore
                         LogWarning("Trying to stop a job [" + _type + "] that isn't running.");
                         return;
                     }
-                    IEnumerator _runningJob = (IEnumerator)m_JobTable[_type];
+                    Coroutine _runningJob = (Coroutine)m_JobTable[_type];
                     StopCoroutine(_runningJob);
                     m_JobTable.Remove(_type);
                 }
@@ -216,11 +222,12 @@ namespace UnityCore
                         RemoveJob(_type);
                     }
                     AudioType _conflictAudio = AudioType.None;
-                    foreach(DictionaryEntry _entry in m_JobTable)
+                    AudioTrack _audioTrackNeeded = (AudioTrack)m_AudioTable[_type];
+
+                    foreach (DictionaryEntry _entry in m_JobTable)
                     {
                         AudioType _audioType = (AudioType)_entry.Key;
                         AudioTrack _audioTrackInUse = (AudioTrack) m_AudioTable[_audioType];
-                        AudioTrack _audioTrackNeeded = (AudioTrack)m_AudioTable[_type];
                         if (_audioTrackNeeded.source == _audioTrackInUse.source)
                         {
                             _conflictAudio = _audioType;
@@ -243,7 +250,15 @@ namespace UnityCore
                     }
                     return null;
                 }
-
+                private AudioTrack GetAudioTrack(AudioType _type, string _job = "")
+                {
+                    if (!m_AudioTable.ContainsKey(_type))
+                    {
+                        LogWarning("You are trying to <color=#fff>" + _job + "</color> for [" + _type + "] but no track was found supporting this audio type.");
+                        return null;
+                    }
+                    return (AudioTrack)m_AudioTable[_type];
+                }
                 public AudioObject GetAudioObjectFromAudioTrack(AudioType _type, AudioTrack _track)
                 {
                     foreach (AudioObject _obj in _track.audio)
