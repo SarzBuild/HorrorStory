@@ -83,7 +83,7 @@ namespace UnityCore
                 {
                     AddJob(new AudioJob(AudioAction.START, _type, _fade, _delay));
                 }
-
+               
                 public void StopAudio(AudioType _type, bool _fade = false, float _delay = 0.0f)
                 {
                     AddJob(new AudioJob(AudioAction.STOP, _type, _fade, _delay));
@@ -95,6 +95,19 @@ namespace UnityCore
                     AddJob(new AudioJob(AudioAction.RESTART, _type, _fade, _delay));
 
                 }
+
+                public float GetAudioTime(AudioType _type)
+                {
+                AudioTrack _track = GetAudioTrack(_type);// (AudioTrack)m_AudioTable[_job.type]
+                return _track.source.time;
+
+                }
+
+                public void SeekAudio(AudioType _type, float time)
+                    {
+                        AudioTrack _track = GetAudioTrack(_type);// (AudioTrack)m_AudioTable[_job.type]
+                        _track.source.time = time;
+                    }
 
             #endregion
 
@@ -131,11 +144,17 @@ namespace UnityCore
 
                 //if (_job.delay != null) yield return _job.delay; // new WaitForSeconds(_job.delay);
                                                                  //yield return new WaitForSeconds(_job.delay);
-                Debug.Log("type " +  _job.action.ToString() + "fade ? " + _job.fade.ToString() + " delay ? " + (_job.delay));
+               // Debug.Log("type " +  _job.action.ToString() + "fade ? " + _job.fade.ToString() + " delay ? " + (_job.delay));
 
 
-                AudioTrack _track = GetAudioTrack(_job.type);// (AudioTrack)m_AudioTable[_job.type];
+                AudioTrack _track = GetAudioTrack(_job.type);// (AudioTrack)m_AudioTable[_job.type]
                 AudioObject _jobSource = GetAudioObjectFromAudioTrack(_job.type, _track);
+                //make the footsteps sound different
+                if (_job.type == AudioType.Footstep || _job.type == AudioType.Footstep2 || _job.type == AudioType.Footstep3 || _job.type == AudioType.Footstep4)
+                {
+                    _jobSource.pitch = 1.0f +  Random.RandomRange(-0.4f, 0.4f);
+                    _jobSource.volume = 1.0f + _jobSource.volume * Random.Range(-0.25f, 0.25f);
+                }
                 _track.source.clip = _jobSource.clip;//GetAudioClipFromAudioTrack(_job.type, _track);
 
                 switch (_job.action)
@@ -150,7 +169,7 @@ namespace UnityCore
                         _track.source.Play();
                         break;
                     case AudioAction.STOP:
-                        Debug.Log("Why");
+                       // Debug.Log("Why");
 
                         if (!_job.fade)
                         {
@@ -171,7 +190,7 @@ namespace UnityCore
                     float _target = _initial == 0 ? _jobSource.volume : 0.0f;
                     float _duration = 1.0f; 
                     float _timer = 0.0f;
-                    Debug.Log("initial " + _initial + " target " + _target + " duration: " + _duration + " timer " + _timer );
+                   // Debug.Log("initial " + _initial + " target " + _target + " duration: " + _duration + " timer " + _timer );
                     while (_timer <= _duration)
                     {
                         _track.source.volume = Mathf.Lerp(_initial, _target, _timer / _duration);
@@ -179,7 +198,7 @@ namespace UnityCore
                         if (_job.action == AudioAction.STOP) Debug.Log(_target);
                         yield return null;
                     }
-                    Debug.Log("initial " + _initial + " target " + _target + " duration: " + _duration + " timer " + _timer);
+                   //Debug.Log("initial " + _initial + " target " + _target + " duration: " + _duration + " timer " + _timer);
 
                     if (_job.action == AudioAction.STOP)
                     {
