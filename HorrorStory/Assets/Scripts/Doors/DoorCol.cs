@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,9 +11,14 @@ public class DoorCol : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            otherCol.GetComponent<BoxCollider>().enabled = true;
-            gameObject.GetComponent<BoxCollider>().enabled = false;
-            door.CloseDoor();
+            //only close the door if its not in the last section
+            if (door.triggerType == Door.TriggerTypes.none)
+            {
+                otherCol.GetComponent<BoxCollider>().enabled = true;
+                gameObject.GetComponent<BoxCollider>().enabled = false;
+                door.CloseDoor();
+            }
+
         }
     }
 }
