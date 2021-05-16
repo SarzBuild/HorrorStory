@@ -10,7 +10,8 @@ public class SetArea : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        LocationController.currentLocation = LocationController.Location.livingRoom;
+        LocationController.previousLocation = LocationController.Location.livingRoom;
     }
 
     // Update is called once per frame
@@ -22,6 +23,8 @@ public class SetArea : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         ////if player
+        if (other.gameObject.tag != "Player") return; 
+
         if (location != LocationController.currentLocation)
         {
             LocationController.previousLocation = LocationController.currentLocation;

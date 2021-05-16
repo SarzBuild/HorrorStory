@@ -27,7 +27,7 @@ namespace UnityCore
 
             private void OnTriggerExit(Collider other)
             {
-                if (manualTrigger) return;
+                if (manualTrigger || other.gameObject.tag != "Player") return;
 
                 if (triggerType == TriggerType.transition)
                 {
