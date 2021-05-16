@@ -13,36 +13,38 @@ namespace UnityCore
         public static class AudioAction
         {
             public static Action<AudioType> PlaySound;
+            public static Action StartMannequinSound;
+            public static Action WalkingAudio;
         }
         public class AudioManager : MonoBehaviour
         {
 
             private float timeToNextStep = 0.0f;
-            public float stepTime = 0.35f;
+            public float stepTime = 0.25f;
             public float scaryThemeTime = 0.0f;
 
             private void Awake()
             {
-                StartMannequin();
 
             }
             private void OnEnable()
             {
                 AudioAction.PlaySound += PlaySound;
+                AudioAction.StartMannequinSound += StartMannequin;
+                AudioAction.WalkingAudio += FootstepsAudio;
             }
 
             private void OnDisable()
             {
                 AudioAction.PlaySound -= PlaySound;
+                AudioAction.StartMannequinSound -= StartMannequin;
+                AudioAction.WalkingAudio -= FootstepsAudio;
+
 
             }
-            private void Update()
+            private void FootstepsAudio()
             {
-                //check if player is walking 
-                bool playerIsWalking = true; 
-                
-                if(playerIsWalking)
-                {
+    
                     timeToNextStep -= Time.deltaTime;
                     if (timeToNextStep < 0 && LocationController.currentLocation != LocationController.Location.hallway)
                     {
@@ -65,13 +67,9 @@ namespace UnityCore
                                 break;
                         }
                     }
-                } else
-                {
-                    timeToNextStep = 0.0f;
-                }
+                } 
 
 
-            }
 
             public AudioController audioController;
 
