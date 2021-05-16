@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityCore.Audio;
@@ -6,14 +6,13 @@ using UnityCore.Audio;
 public class Door : Interactable
 {
     [SerializeField] private bool invisible;
-    [SerializeField] DoorCol exitCol;
-    [SerializeField] DoorCol enterCol;
     Animator myAnim;
     public bool canBeOpened = true;
     public UnityCore.Audio.AudioType lockedDoorAudio;
     public UnityCore.Audio.AudioType openDoor;
     public UnityCore.Audio.AudioType closeDoor;
     public UnityCore.Audio.AudioType unlockDoor;
+    //public float doorXoffset = 0.4f;
 
 
     public enum TriggerTypes { none, copy, next, finish }
@@ -23,25 +22,28 @@ public class Door : Interactable
 
 
     private bool isOpening = false;
+    private bool isOpen = false; 
     private void Awake()
     {
         myAnim = GetComponentInParent<Animator>();
         roomIsSpawned = false;
         initialTransform = transform;
-
+        //initialTransform.position = new Vector3(initialTransform.position.x + doorXoffset, initialTransform.position.y, initialTransform.position.z);
+        isOpen = false;
     }
 
 
 
     private void OpenDoor()
     {
-        if (canBeOpened)
+        if (canBeOpened && !isOpen)
         {
             GetComponent<BoxCollider>().enabled = false;
             myAnim.SetBool("isOpening", true);
             myAnim.SetBool("isClosing", false);
             canBeOpened = false;
             isOpening = true;
+            isOpen = true;
             AudioAction.PlaySound(openDoor);
             switch (triggerType)
             {
@@ -70,12 +72,18 @@ public class Door : Interactable
             AudioAction.PlaySound(lockedDoorAudio);
         }
     }
+
+    public bool GetIsOpen()
+    {
+        return isOpen;
+    }
     public void CloseDoor()
     {
         AudioAction.PlaySound(closeDoor);
         myAnim.SetBool("isOpening", false);
         myAnim.SetBool("isClosing", true);            
         canBeOpened = true;
+        isOpen = false;
         
     }
     public override string GetDescription()
@@ -101,6 +109,8 @@ public class Door : Interactable
     //If there's an interaction, we call our functions
     public override void Interact()
     {
+        Debug.Log("open door");
+
         OpenDoor();
     }
 

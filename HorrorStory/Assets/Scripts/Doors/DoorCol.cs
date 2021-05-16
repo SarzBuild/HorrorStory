@@ -1,11 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorCol : MonoBehaviour
 {
-    [SerializeField] DoorCol otherCol;
     [SerializeField] Door door;
+    [SerializeField] DoorCol otherCol;
 
     private void OnTriggerEnter(Collider other)
     {
