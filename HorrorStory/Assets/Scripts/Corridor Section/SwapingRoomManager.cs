@@ -13,21 +13,17 @@ public class SwapingRoomManager : MonoBehaviour
     public enum direction { entrance, left, right};
 
 
-    public DoorTrigger doorLeftFirstRoom;
-    public DoorTrigger doorRightFirstRoom; 
 
-    public Transform firstRoomPlayerLocation;
     public Transform firstRoomTransform;
 
     public GameObject endOfLevelRoom;
     public float endOfLevelRoomDimention;
-    public float swappingRoomDimention = 1.9f;
-
+    public float swappingRoomDimention = 4.3f;
     public GameObject[] prefabs;
     private int currentPrefabIndex;
 
     //it is a queue so we can remove rooms further back so we don't collide with them
-    private Queue<SwapingRoom> rooms; 
+    private Queue<GameObject> rooms; 
 
     private bool roomLevelIsComplete;
    
@@ -59,7 +55,7 @@ public class SwapingRoomManager : MonoBehaviour
         {
             _instance = this;
         }
-        rooms = new Queue<SwapingRoom>();
+        rooms = new Queue<GameObject>();
 
     }
 
@@ -107,23 +103,18 @@ public class SwapingRoomManager : MonoBehaviour
 
         GameObject roomPrefab = prefabs[currentPrefabIndex];
         Vector3 currentDoorPosition = doorTransform.position;
-        Quaternion currentDoorRotation = doorTransform.rotation; 
+        Quaternion currentDoorRotation = doorTransform.rotation; //.eulerAngles + Quaternion.EulerRotation(0.0f, 180.0f, 0.0f); 
         GameObject spawnedRoom = Instantiate(roomPrefab) as GameObject;
         //spawnedRoom.transform.rotation = currentDoorRotation;
-        spawnedRoom.transform.rotation = Quaternion.Euler(0,currentDoorRotation.eulerAngles.y, 0);
-        spawnedRoom.transform.position = new Vector3(doorTransform.position.x, firstRoomTransform.position.y,doorTransform.position.z) + doorTransform.forward * swappingRoomDimention;
+        spawnedRoom.transform.rotation = Quaternion.Euler(0,currentDoorRotation.eulerAngles.y + 180.0f, 0);
+        spawnedRoom.transform.position = new Vector3(doorTransform.position.x, firstRoomTransform.position.y, doorTransform.position.z) - doorTransform.forward * swappingRoomDimention;
 
         //spawnedRoom.transform.Translate(doorTransform.forward * swappingRoomDimention);
-        SwapingRoom room = spawnedRoom.GetComponent<SwapingRoom>();
-        rooms.Enqueue(room);
+        rooms.Enqueue(spawnedRoom);
         if(rooms.Count > 4)
         {
-            room = rooms.Dequeue();
-            Destroy(room.gameObject);
-            room = rooms.Peek();
-
-            //to prevent backtracking
-            room.ActivateEntranceDoor();
+            spawnedRoom = rooms.Dequeue();
+            Destroy(spawnedRoom.gameObject);
         }
 
 
@@ -138,30 +129,14 @@ public class SwapingRoomManager : MonoBehaviour
         GameObject finalRoom = Instantiate(endOfLevelRoom) as GameObject;
         finalRoom.transform.rotation = currentDoorRotation;
         finalRoom.transform.position = doorTransform.position + doorTransform.forward * endOfLevelRoomDimention;
-        SwapingRoom room; 
-        while(rooms.Count > 1)
+        rooms.Enqueue(finalRoom);
+        if (rooms.Count > 4)
         {
-            room = rooms.Dequeue();
-            Destroy(room.gameObject);
+            finalRoom = rooms.Dequeue();
+            Destroy(finalRoom.gameObject);
         }
-        room = rooms.Dequeue();
-        //can't go back door is locked behind you.
-        room.ActivateEntranceDoor();
     }
 
 
-    public void Reset(GameObject player)
-    {
-
-        rooms.Clear();
-
-        //or if its easier just destroy the doors and instantiate new ones
-        doorLeftFirstRoom.Reset();
-        doorRightFirstRoom.Reset();
-
-        player.transform.position = firstRoomPlayerLocation.position;
-        player.transform.rotation = firstRoomPlayerLocation.rotation;
-        //change the rotation too?
-    }
 
 }
