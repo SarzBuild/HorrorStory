@@ -9,6 +9,7 @@ public class Mannequin : MonoBehaviour
     private NavMeshAgent agent;
     private float timeToNextSoundEffect; 
     private float timeBetweenSoundEffects = 4.0f;
+    public float speed;
 
     public UnityCore.Audio.AudioType[] soundEffects; 
     void Start()
@@ -36,8 +37,8 @@ public class Mannequin : MonoBehaviour
         {
             timeToNextSoundEffect -= Time.deltaTime;
         }
-
-        agent.SetDestination(goal.position);
+        transform.position =  Vector3.MoveTowards(transform.position, goal.position, speed * Time.deltaTime);
+        //agent.SetDestination(goal.position);
 
     }
 }
