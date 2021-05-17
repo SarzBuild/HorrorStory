@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -73,7 +73,7 @@ public class GameActionController : MonoBehaviour
 
     public void WaterDrains()
     {
-
+        UnityCore.Audio.AudioAction.PlaySound(UnityCore.Audio.AudioType.PortraitSmash);
         UnityCore.Audio.AudioAction.PlaySound(UnityCore.Audio.AudioType.WaterDrainingOut);
         water.Drain();
         StartCoroutine(delayUnlock(5.0f));
