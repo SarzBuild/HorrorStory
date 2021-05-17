@@ -61,7 +61,8 @@ public class Sc_PlayerController : MonoBehaviour
         if (playerInputs.GetMovingRight()) 
             moveDirection.x = +1;
         moveDirection.Normalize(); //We normalize the values
-        
+        if (moveDirection.magnitude > 0) UnityCore.Audio.AudioAction.WalkingAudio();
+
         //We create a new vector3 that'll be our main moving variable and we set the velocity accordingly
         playerReferences.moveTowardsPos = new Vector3(moveDirection.x, playerReferences.jumpAndFallVelocity, moveDirection.z);
         //We update the player transform with the camera transform, meaning that the player will go forward in the direction that the camera is facing + when the player moves sideways, it updates with the camera transform
