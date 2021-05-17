@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +7,7 @@ public class MirrorObject : Interactable
     //We get the player references to update some values
     private Sc_PlayerReferences playerReferences;
     [SerializeField] private bool invisible;
+    public UnityCore.Audio.AudioType portraitSound; 
     private void Start()
     {
         playerReferences = Sc_PlayerReferences.Instance;
@@ -15,6 +16,11 @@ public class MirrorObject : Interactable
     void BreakMirror()
     {
         Destroy(gameObject);
+    }
+
+    public void OnLook()
+    {
+        UnityCore.Audio.AudioAction.PlaySound(portraitSound);
     }
 
     //We return the string that's used when the player's vision is on the game object
@@ -27,6 +33,8 @@ public class MirrorObject : Interactable
     public override void Interact()
     {
         BreakMirror();
+        GameActions.waterDrains();
+
     }
 
     public override bool Invisible()
