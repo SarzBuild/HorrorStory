@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -13,8 +13,13 @@ namespace UnityCore
         public static class AudioAction
         {
             public static Action<AudioType> PlaySound;
+            public static Action<AudioType> StopSound;
+
             public static Action StartMannequinSound;
             public static Action WalkingAudio;
+            public static Action LivingRoomStart;
+
+
         }
         public class AudioManager : MonoBehaviour
         {
@@ -30,44 +35,51 @@ namespace UnityCore
             private void OnEnable()
             {
                 AudioAction.PlaySound += PlaySound;
+                AudioAction.StopSound += StopSound;
+
                 AudioAction.StartMannequinSound += StartMannequin;
                 AudioAction.WalkingAudio += FootstepsAudio;
+                AudioAction.LivingRoomStart += EnterLivingRoom;
             }
 
             private void OnDisable()
             {
                 AudioAction.PlaySound -= PlaySound;
+                AudioAction.StopSound -= StopSound;
+
                 AudioAction.StartMannequinSound -= StartMannequin;
                 AudioAction.WalkingAudio -= FootstepsAudio;
+                AudioAction.LivingRoomStart -= EnterLivingRoom;
+
 
 
             }
             private void FootstepsAudio()
             {
-    
-                    timeToNextStep -= Time.deltaTime;
-                    if (timeToNextStep < 0 && LocationController.currentLocation != LocationController.Location.hallway)
+
+                timeToNextStep -= Time.deltaTime;
+                if (timeToNextStep < 0 && LocationController.currentLocation != LocationController.Location.hallway)
+                {
+                    //Debug.Log("Footstep");
+                    timeToNextStep = stepTime + UnityEngine.Random.Range(-0.1f, 0.1f);
+                    int footstep = (int)Mathf.Floor(UnityEngine.Random.Range(0.0f, 4.0f));
+                    switch (footstep)
                     {
-                        Debug.Log("Footstep");
-                        timeToNextStep = stepTime + UnityEngine.Random.Range(-0.1f, 0.1f);
-                        int footstep =  (int) Mathf.Floor(UnityEngine.Random.Range(0.0f, 4.0f));
-                        switch(footstep)
-                        {
-                            case 0:
-                                audioController.PlayAudio(AudioType.Footstep);
-                                break;
-                            case 1:
-                                audioController.PlayAudio(AudioType.Footstep2);
-                                break;
-                            case 2:
-                                audioController.PlayAudio(AudioType.Footstep3);
-                                break;
-                            case 3:
-                                audioController.PlayAudio(AudioType.Footstep4);
-                                break;
-                        }
+                        case 0:
+                            audioController.PlayAudio(AudioType.Footstep);
+                            break;
+                        case 1:
+                            audioController.PlayAudio(AudioType.Footstep2);
+                            break;
+                        case 2:
+                            audioController.PlayAudio(AudioType.Footstep3);
+                            break;
+                        case 3:
+                            audioController.PlayAudio(AudioType.Footstep4);
+                            break;
                     }
-                } 
+                }
+            }
 
 
 
@@ -76,6 +88,12 @@ namespace UnityCore
             public void PlaySound(AudioType audioType)
             {
                 audioController.PlayAudio(audioType, false, 0.00f);
+            }
+
+            public void StopSound(AudioType audioType)
+            {
+                audioController.StopAudio(audioType, false, 0.00f);
+
             }
             public void LeaveBathroom()
             {
