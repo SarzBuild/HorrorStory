@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityCore.Audio;
@@ -15,14 +15,14 @@ public class Door : Interactable
     //public float doorXoffset = 0.4f;
 
 
-    public enum TriggerTypes { none, copy, next, finish }
+    public enum TriggerTypes { none, copy, next, finish, bathroomDoor }
     public TriggerTypes triggerType = TriggerTypes.none;
     private Transform initialTransform;
     private bool roomIsSpawned = false;
 
 
     private bool isOpening = false;
-    private bool isOpen = false; 
+    private bool isOpen = false;
     private void Awake()
     {
         myAnim = GetComponentInParent<Animator>();
@@ -57,18 +57,19 @@ public class Door : Interactable
                 case (TriggerTypes.next):
                     if (roomIsSpawned) return;
                     RoomAction.spawnNextRoom(initialTransform);
-                    roomIsSpawned = true; 
+                    roomIsSpawned = true;
                     break;
                 case (TriggerTypes.finish):
                     if (roomIsSpawned) return;
                     RoomAction.finishArea(initialTransform);
-                    roomIsSpawned = true; 
+                    roomIsSpawned = true;
                     break;
                 default:
                     break;
             }
         }
-        else {
+        else
+        {
             AudioAction.PlaySound(lockedDoorAudio);
         }
     }
@@ -79,12 +80,19 @@ public class Door : Interactable
     }
     public void CloseDoor()
     {
+        if (!isOpen) return; 
+
+        if (triggerType == TriggerTypes.bathroomDoor)// && LocationController.currentLocation == LocationController.Location.bathRoom)
+        {
+            GameActions.enterBathroom(this);
+            
+        }
+        canBeOpened = false;
         AudioAction.PlaySound(closeDoor);
         myAnim.SetBool("isOpening", false);
-        myAnim.SetBool("isClosing", true);            
-        canBeOpened = true;
+        myAnim.SetBool("isClosing", true);
         isOpen = false;
-        
+
     }
     public override string GetDescription()
     {
@@ -96,7 +104,7 @@ public class Door : Interactable
         {
             return null;
         }
-        
+
     }
 
     public void UnlockDoor()
