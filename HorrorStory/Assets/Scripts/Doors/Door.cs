@@ -42,7 +42,7 @@ public class Door : Interactable
             myAnim.SetBool("isClosing", false);
             canBeOpened = false;
             isOpening = true;
-            AudioAction.PlaySound(openDoor);
+            //AudioAction.PlaySound(openDoor);
             switch (triggerType)
             {
                 case (TriggerTypes.none):
@@ -67,12 +67,12 @@ public class Door : Interactable
             }
         }
         else {
-            AudioAction.PlaySound(lockedDoorAudio);
+            //AudioAction.PlaySound(lockedDoorAudio);
         }
     }
     public void CloseDoor()
     {
-        AudioAction.PlaySound(closeDoor);
+        //AudioAction.PlaySound(closeDoor);
         myAnim.SetBool("isOpening", false);
         myAnim.SetBool("isClosing", true);            
         canBeOpened = true;
