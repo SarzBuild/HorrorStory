@@ -85,7 +85,7 @@ public class Sc_PlayerController : MonoBehaviour
 
     void HandleCameraLock()
     {
-        if (playerInputs.cursorVisibility)
+        /*if (playerInputs.cursorVisibility)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -94,7 +94,7 @@ public class Sc_PlayerController : MonoBehaviour
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-        }
+        }*/
     }
 
     //This function will be dealt with the SendMessage method
@@ -111,7 +111,7 @@ public class Sc_PlayerController : MonoBehaviour
         playerReferences.successfulHit = false;
         
         //If the ray collides with something, we check if it has the Interactable component
-        if (Physics.Raycast(ray, out hit, playerReferences.interactionDistance))
+        if (Physics.Raycast(ray, out hit, playerReferences.interactionDistance, playerReferences.interactionLayerMask))
         {
             Interactable interactable = hit.collider.GetComponent<Interactable>();
             
@@ -177,6 +177,8 @@ public class Sc_PlayerController : MonoBehaviour
                     interactable.ResetHoldTime();
                 }
                 playerReferences.holdButtonProgress.fillAmount = interactable.GetHoldTime();
+                break;
+            case Interactable.InteractionType.Special:
                 break;
             default:
                 //That's just for if there's an error

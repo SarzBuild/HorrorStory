@@ -8,7 +8,7 @@ public class ExampleObject : Interactable
     [SerializeField] private bool invisible;
 
     void EventFunction()
-    {
+    { 
         //We put everything that's related to what we want to do in here.
     }
 

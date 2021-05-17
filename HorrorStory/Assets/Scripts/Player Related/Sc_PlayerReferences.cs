@@ -36,6 +36,7 @@ public class Sc_PlayerReferences : MonoBehaviour
     public GameObject lensGameObject;
     
     public LayerMask groundLayerMask;
+    public LayerMask interactionLayerMask;
     #endregion
 
     #region Sound clips
