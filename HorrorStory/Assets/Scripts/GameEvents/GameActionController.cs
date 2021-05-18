@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,6 +24,7 @@ public class GameActionController : MonoBehaviour
         GameActions.playerDrown += PlayerDrown;
         GameActions.waterDrains += WaterDrains; // after some time unlock the bathroom door
         GameActions.endCutscene += RunLastCutScene;
+        GameActions.WrongMirror += WrongMirrorBreak;
     }
 
     private void OnDisable()
@@ -34,6 +35,8 @@ public class GameActionController : MonoBehaviour
         GameActions.playerDrown -= PlayerDrown;
         GameActions.waterDrains -= WaterDrains; // after some time unlock the bathroom door
         GameActions.endCutscene -= RunLastCutScene;
+        GameActions.WrongMirror += WrongMirrorBreak;
+
     }
     public void RunLastCutScene()
     {
@@ -80,6 +83,11 @@ public class GameActionController : MonoBehaviour
         StartCoroutine(delayStopAudio(5.0f, UnityCore.Audio.AudioType.WaterDrainingOut));
 
         
+    }
+
+    public void WrongMirrorBreak()
+    {
+        UnityCore.Audio.AudioAction.PlaySound(UnityCore.Audio.AudioType.PortraitSmash);
     }
 
     public void EnterBathroom(Door brDoor)

@@ -28,13 +28,19 @@ public class Water : MonoBehaviour
         isDraining = true;
     }
 
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Water")
+        {
+            GameActions.playerDrown();
+        }
+    }
     // Update is called once per frame
     void Update()
     {
         if (isRising) transform.Translate(Vector3.up * speed * Time.deltaTime, Space.World);
 
-        if (isDraining) transform.Translate(-Vector3.up * speed * 8 * Time.deltaTime, Space.World);
+        if (isDraining) transform.Translate(-Vector3.up * speed * 3 * Time.deltaTime, Space.World);
 
     }
 }
