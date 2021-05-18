@@ -8,11 +8,14 @@ public class MirrorObject : Interactable
     private Sc_PlayerReferences playerReferences;
     [SerializeField] private bool invisible;
     public UnityCore.Audio.AudioType portraitSound;
-    private float timeSinceAudio = 4.0f; 
+    private float timeSinceAudio = 4.0f;
+    private bool isInteractable; 
+
     private void Start()
     {
         playerReferences = Sc_PlayerReferences.Instance;
         timeSinceAudio = 4.0f;
+        isInteractable = true; 
     }
 
     void BreakMirror()
@@ -28,19 +31,29 @@ public class MirrorObject : Interactable
     //We return the string that's used when the player's vision is on the game object
     public override string GetDescription()
     {
-        if (timeSinceAudio >= 4.0f)
+        if(isInteractable)
         {
-            UnityCore.Audio.AudioAction.PlaySound(portraitSound);
-            timeSinceAudio = 0.0f;
+            if (timeSinceAudio >= 4.0f)
+            {
+                UnityCore.Audio.AudioAction.PlaySound(portraitSound);
+                timeSinceAudio = 0.0f;
+            }
+            return "Left Click to destroy the mirror";
         }
-        return "Left Click to destroy the mirror";
+        return "";
+
     }
     
     //If there's an interaction, we call our functions
     public override void Interact()
     {
-        BreakMirror();
-        GameActions.waterDrains();
+        if(isInteractable)
+        {
+            BreakMirror();
+            GameActions.waterDrains();
+            isInteractable = false; 
+        }
+
 
     }
 
