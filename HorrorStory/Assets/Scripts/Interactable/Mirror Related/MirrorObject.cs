@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +8,7 @@ public class MirrorObject : Interactable
     private Sc_PlayerReferences playerReferences;
     [SerializeField] private bool invisible;
     public UnityCore.Audio.AudioType portraitSound;
+    public bool isSpecialPortrait = false; 
     private float timeSinceAudio = 4.0f;
     private bool isInteractable; 
 
@@ -49,10 +50,17 @@ public class MirrorObject : Interactable
     {
         if(isInteractable)
         {
-            BreakMirror();
-            GameActions.waterDrains();
-            isInteractable = false; 
-        }
+            if(isSpecialPortrait)
+            {
+                BreakMirror();
+                GameActions.waterDrains();
+                isInteractable = false;
+            } else
+            {
+                GameActions.WrongMirror();
+            }
+
+        } 
 
 
     }
