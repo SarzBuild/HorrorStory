@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ public class Water : MonoBehaviour
 
     public float speed = 1.0f;
     private bool isRising = false;
-    private bool isDraining = false; 
+    private bool isDraining = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +20,7 @@ public class Water : MonoBehaviour
     {
         isRising = true;
         isDraining = false;
+        Debug.Log("Rising");
     }
 
     public void Drain()
@@ -32,7 +33,14 @@ public class Water : MonoBehaviour
     {
         if (other.gameObject.tag == "Water")
         {
-            GameActions.playerDrown();
+            if (isRising)
+            {
+                GameActions.playerDrown();
+            }
+            else
+            {
+                GameActions.BathroomFinished();
+            }
         }
     }
     // Update is called once per frame
