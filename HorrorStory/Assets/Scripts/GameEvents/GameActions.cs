@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -12,6 +12,7 @@ public static class GameActions
     public static Action waterDrains; // after some time unlock the bathroom door
     public static Action endCutscene;
     public static Action WrongMirror;
+    public static Action BathroomFinished;
 
 
 }

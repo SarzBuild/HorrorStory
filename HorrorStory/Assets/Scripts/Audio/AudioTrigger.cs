@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace UnityCore
@@ -17,9 +17,12 @@ namespace UnityCore
             public TriggerType triggerType;
             public AudioType audioEventSound;
 
-            public AudioManager audioManager;
+            private AudioManager audioManager;
 
-
+            private void Awake()
+            {
+                audioManager = GameObject.FindObjectOfType<AudioManager>();
+            }
             public void TriggerSound()
             {
                 AudioEvent();
@@ -27,15 +30,21 @@ namespace UnityCore
 
             private void OnTriggerExit(Collider other)
             {
-                if (manualTrigger || other.gameObject.tag != "Player") return;
+                if (manualTrigger) return;// || other.gameObject.tag != "Player") return;
 
-                if (triggerType == TriggerType.transition)
+                if (other.gameObject.tag == "Player")
                 {
-                    Transition();
-                } else
-                {
-                    AudioEvent();
+                    Debug.Log(other.gameObject.name);
+                    if (triggerType == TriggerType.transition)
+                    {
+                        Transition();
+                    }
+                    else
+                    {
+                        AudioEvent();
+                    }
                 }
+
             } 
             private void Transition() { 
                 //hardcode for now but change later
@@ -55,11 +64,25 @@ namespace UnityCore
                         break;
 
                     case LocationController.Location.corridors:
-                        audioManager.EnterCorridors();
+                       // audioManager.EnterCorridors(1);
 
                         break;
+                    case LocationController.Location.corridors2:
+                        //audioManager.EnterCorridors(2);
 
+                        break;
+                    case LocationController.Location.corridors3:
+                       // audioManager.EnterCorridors(3);
 
+                        break;
+                    case LocationController.Location.corridors4:
+                       // audioManager.EnterCorridors(4);
+
+                        break;
+                    case LocationController.Location.corridors5:
+                       // audioManager.EnterCorridors(5);
+
+                        break;
                 }
             }
 
@@ -75,7 +98,23 @@ namespace UnityCore
                         audioManager.LeaveLivingRoom();
                         break;
                     case LocationController.Location.corridors:
-                        audioManager.LeaveCorridors();
+                       // audioManager.LeaveCorridors(1);
+                        break;
+                    case LocationController.Location.corridors2:
+                      //  audioManager.LeaveCorridors(2);
+
+                        break;
+                    case LocationController.Location.corridors3:
+                       // audioManager.LeaveCorridors(3);
+
+                        break;
+                    case LocationController.Location.corridors4:
+                       // audioManager.LeaveCorridors(4);
+
+                        break;
+                    case LocationController.Location.corridors5:
+                       // audioManager.LeaveCorridors(5);
+
                         break;
                 }
             }

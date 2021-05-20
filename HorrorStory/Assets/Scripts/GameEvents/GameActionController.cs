@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,6 +25,7 @@ public class GameActionController : MonoBehaviour
         GameActions.waterDrains += WaterDrains; // after some time unlock the bathroom door
         GameActions.endCutscene += RunLastCutScene;
         GameActions.WrongMirror += WrongMirrorBreak;
+        GameActions.BathroomFinished += BathroomFinished;
     }
 
     private void OnDisable()
@@ -36,6 +37,8 @@ public class GameActionController : MonoBehaviour
         GameActions.waterDrains -= WaterDrains; // after some time unlock the bathroom door
         GameActions.endCutscene -= RunLastCutScene;
         GameActions.WrongMirror += WrongMirrorBreak;
+        GameActions.BathroomFinished -= BathroomFinished;
+
 
     }
     public void RunLastCutScene()
@@ -73,14 +76,19 @@ public class GameActionController : MonoBehaviour
         UnityCore.Audio.AudioAction.PlaySound(UnityCore.Audio.AudioType.WaterAbovePlayer);
 
     }
+    public void BathroomFinished()
+    {
+        bathroomDoor.UnlockDoor();
+        bathroomDoor.Interact();
+        UnityCore.Audio.AudioAction.StopSound(UnityCore.Audio.AudioType.WaterDrainingOut);
 
+
+    }
     public void WaterDrains()
     {
         UnityCore.Audio.AudioAction.PlaySound(UnityCore.Audio.AudioType.PortraitSmash);
         UnityCore.Audio.AudioAction.PlaySound(UnityCore.Audio.AudioType.WaterDrainingOut);
         water.Drain();
-        StartCoroutine(delayUnlock(5.0f));
-        StartCoroutine(delayStopAudio(5.0f, UnityCore.Audio.AudioType.WaterDrainingOut));
 
         
     }
@@ -118,8 +126,6 @@ public class GameActionController : MonoBehaviour
     IEnumerator delayUnlock(float time)
     {
         yield return new WaitForSeconds(time);
-        bathroomDoor.UnlockDoor();
-        bathroomDoor.Interact();
     }
 
     IEnumerator delaySound(float time, UnityCore.Audio.AudioType sound )
