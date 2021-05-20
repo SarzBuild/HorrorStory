@@ -7,9 +7,5 @@ public class DoorHinge : MonoBehaviour
     public void EnableCollider()
     {
         GetComponentInChildren<BoxCollider>().enabled = true;
-    }
-    private void asas()
-    {
-
-    }    
+    }  
 }

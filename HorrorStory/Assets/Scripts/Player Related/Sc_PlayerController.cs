@@ -61,7 +61,7 @@ public class Sc_PlayerController : MonoBehaviour
         if (playerInputs.GetMovingRight()) 
             moveDirection.x = +1;
         moveDirection.Normalize(); //We normalize the values
-        if (moveDirection.magnitude > 0) UnityCore.Audio.AudioAction.WalkingAudio();
+        //if (moveDirection.magnitude > 0) UnityCore.Audio.AudioAction.WalkingAudio();
 
         //We create a new vector3 that'll be our main moving variable and we set the velocity accordingly
         playerReferences.moveTowardsPos = new Vector3(moveDirection.x, playerReferences.jumpAndFallVelocity, moveDirection.z);
@@ -86,7 +86,7 @@ public class Sc_PlayerController : MonoBehaviour
 
     void HandleCameraLock()
     {
-        /*if (playerInputs.cursorVisibility)
+        if (playerInputs.cursorVisibility)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -95,7 +95,7 @@ public class Sc_PlayerController : MonoBehaviour
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-        }*/
+        }
     }
 
     //This function will be dealt with the SendMessage method

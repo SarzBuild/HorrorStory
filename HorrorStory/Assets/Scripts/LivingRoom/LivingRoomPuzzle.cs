@@ -36,7 +36,7 @@ public class LivingRoomPuzzle : MonoBehaviour
         if (currentObject < puzzleObjects.Count)
         {
             puzzleObjects[currentObject].canInteract = true;
-            puzzleObjects[currentObject].GetComponentInChildren<SpriteRenderer>().enabled = true;
+            //puzzleObjects[currentObject].GetComponentInChildren<SpriteRenderer>().enabled = true;
         }
     }
     void HandleClue()
@@ -45,21 +45,27 @@ public class LivingRoomPuzzle : MonoBehaviour
 
         if (currentObject == 0)
         {
-            clueText.text = "Mom! Help! It's so dark in here!";
+            clueText.text = "HELP!";
         }
         else if (currentObject == 1)
         {
-            clueText.text = "With light we grow";
+            clueText.text = "The first number is\nin a place to relax\nbut you must get there\nbefore the end of the wax";
         }
         else if (currentObject == 2)
         {
-            clueText.text = "I turn into paper to create it";
+            clueText.text = "The second number is\nwhere you can have some fun\nhave some good laughts\nbut you son is being pointed a gun";
         }
         else if (currentObject == 3)
         {
-            clueText.text = "Once upon a time\nI lost my spouse\ntogether with my kids\nin my own... ";
+            clueText.text = "The third number is\nin an object that creates light\nit will keep you safe\njust hope it works all night...";
         }
         else if (currentObject == 4)
+        {
+            //next line is for testing purposes
+            GameObject.Find("DollHouse").GetComponent<Animator>().SetBool("mustOpen", true);
+            clueText.text = "Once upon a time\nI lost my spouse\ntogether with my kids\nin my own... ";
+        }
+        else if (currentObject == 5)
         {
             Debug.Log("test");
             roomDoor.GetComponentInChildren<Door>().canBeOpened = true;
@@ -69,10 +75,10 @@ public class LivingRoomPuzzle : MonoBehaviour
     }
     IEnumerator ShowClue()
     {
-        if (currentObject < 4)
+        if (currentObject < 5)
         {
             clueObj.SetActive(true);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(3);
             clueObj.SetActive(false);
         }
         else

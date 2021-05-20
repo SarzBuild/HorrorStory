@@ -22,7 +22,7 @@ public class Door : Interactable
 
 
     private bool isOpening = false;
-    private bool isOpen = false;
+    public bool isOpen = false;
     private void Awake()
     {
         myAnim = GetComponentInParent<Animator>();
@@ -85,9 +85,8 @@ public class Door : Interactable
         if (triggerType == TriggerTypes.bathroomDoor)// && LocationController.currentLocation == LocationController.Location.bathRoom)
         {
             GameActions.enterBathroom(this);
-            
         }
-        canBeOpened = false;
+        canBeOpened = true;
         AudioAction.PlaySound(closeDoor);
         myAnim.SetBool("isOpening", false);
         myAnim.SetBool("isClosing", true);
@@ -117,8 +116,6 @@ public class Door : Interactable
     //If there's an interaction, we call our functions
     public override void Interact()
     {
-        Debug.Log("open door");
-
         OpenDoor();
     }
 

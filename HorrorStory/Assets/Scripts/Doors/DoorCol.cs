@@ -18,7 +18,6 @@ public class DoorCol : MonoBehaviour
                 gameObject.GetComponent<BoxCollider>().enabled = false;
                 door.CloseDoor();
             }
-
         }
     }
 }
