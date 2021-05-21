@@ -11,6 +11,8 @@ public class Sc_PlayerController : MonoBehaviour
     
     private float currentSpeed;
     private int currentHealth;
+
+    private bool hasDied;
     
     
     void Start()
@@ -20,6 +22,7 @@ public class Sc_PlayerController : MonoBehaviour
         playerReferences = Sc_PlayerReferences.Instance;
         //Making sure that the current health is set to the max health when the game starts
         currentHealth = playerReferences.maxHealth;
+        playerReferences.DeathUI.SetActive(false);
     }
     
     void FixedUpdate()
@@ -61,7 +64,7 @@ public class Sc_PlayerController : MonoBehaviour
         if (playerInputs.GetMovingRight()) 
             moveDirection.x = +1;
         moveDirection.Normalize(); //We normalize the values
-        //if (moveDirection.magnitude > 0) UnityCore.Audio.AudioAction.WalkingAudio();
+        if (moveDirection.magnitude > 0) UnityCore.Audio.AudioAction.WalkingAudio();
 
         //We create a new vector3 that'll be our main moving variable and we set the velocity accordingly
         playerReferences.moveTowardsPos = new Vector3(moveDirection.x, playerReferences.jumpAndFallVelocity, moveDirection.z);
@@ -101,7 +104,7 @@ public class Sc_PlayerController : MonoBehaviour
     //This function will be dealt with the SendMessage method
     void HandleDamage(int damage)
     {
-        //currentHealth - damage;
+        currentHealth -= damage;
     }
     void CheckForInteraction()
     {
@@ -221,7 +224,8 @@ public class Sc_PlayerController : MonoBehaviour
         playerReferences.isDead = true;
         playerInputs.SetLockPlayer();
         playerInputs.SetLockPlayerCursorVisibility();
-        playerReferences.isInCutscene = true;
+        //playerReferences.isInCutscene = true;
+        ActivateDeathUIScreen();
     }
     
     void CheckIfDead()
@@ -229,7 +233,11 @@ public class Sc_PlayerController : MonoBehaviour
         //We check if the player has less than 0 health
         if (currentHealth <= 0)
         {
-            HandleDeath();
+            if (!hasDied)
+            {
+                HandleDeath();
+                hasDied = !hasDied;
+            }
         }
         //Otherwise, we check if the current health is greater than the max health, we set the current health back to the limit
         else if (currentHealth > playerReferences.maxHealth)
@@ -265,5 +273,10 @@ public class Sc_PlayerController : MonoBehaviour
 
         return false;
     }
-    
+
+    void ActivateDeathUIScreen()
+    {
+        playerReferences.DeathUI.SetActive(true);
+    }
+
 }

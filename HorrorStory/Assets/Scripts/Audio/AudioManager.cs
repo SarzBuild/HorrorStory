@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -134,10 +134,29 @@ namespace UnityCore
                 EnterHallway();
             }
 
-            public void EnterCorridors()
+            public void EnterCorridors(int corridor)
             {
-                LeaveHallway();
-                audioController.PlayAudio(AudioType.Grandfather_thumping, true, 0.0f);
+
+
+                switch(corridor) {
+                    case 1:
+                        LeaveHallway();
+                        audioController.PlayAudio(AudioType.Grandfather_thumping, true, 0.0f);
+                        break;
+                    case 2:
+                        audioController.PlayAudio(AudioType.SecondClockNoise, true, 0.0f);
+                        break;
+                    case 3:
+                        audioController.PlayAudio(AudioType.ThirdClockNoise, true, 0.0f);
+                        break;
+                    case 4:
+                        audioController.PlayAudio(AudioType.ForthClockNoise, true, 0.0f);
+                        break;
+                    case 5:
+                        audioController.PlayAudio(AudioType.EndCutscene, true, 0.0f); 
+                        break;
+                }
+            
 
             }
 

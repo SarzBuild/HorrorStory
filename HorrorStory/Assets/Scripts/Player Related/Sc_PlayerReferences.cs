@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Sc_PlayerReferences : MonoBehaviour
@@ -37,6 +38,7 @@ public class Sc_PlayerReferences : MonoBehaviour
     
     public LayerMask groundLayerMask;
     public LayerMask interactionLayerMask;
+    public GameObject DeathUI;
     #endregion
 
     #region Sound clips
@@ -68,5 +70,15 @@ public class Sc_PlayerReferences : MonoBehaviour
         holdButton = GameObject.FindWithTag("HoldButtonUI");
         holdButtonProgress = GameObject.FindWithTag("ProgressUI").GetComponent<Image>();
 
+    }
+    
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void ResetGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

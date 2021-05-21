@@ -8,6 +8,9 @@ TagManager:
   - Lens
   - ProgressUI
   - HoldButtonUI
+  - Water
+  - Enemy
+  - DeathScreen
   layers:
   - Default
   - TransparentFX

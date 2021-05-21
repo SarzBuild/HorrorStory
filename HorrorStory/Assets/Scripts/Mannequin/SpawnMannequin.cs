@@ -6,7 +6,7 @@ public class SpawnMannequin : MonoBehaviour
 {
     public Transform spawnLocation;
     public GameObject mannequinPrefab;
-    public GameObject MannequinShell; 
+    //public GameObject MannequinShell; 
 
 
     private void OnTriggerEnter(Collider other)
@@ -16,7 +16,7 @@ public class SpawnMannequin : MonoBehaviour
             GameObject spawnedMannequin = Instantiate(mannequinPrefab) as GameObject;
             spawnedMannequin.transform.rotation = spawnLocation.rotation;
             spawnedMannequin.transform.position = spawnLocation.position;
-            MannequinShell.transform.parent = spawnedMannequin.transform;
+            //MannequinShell.transform.parent = spawnedMannequin.transform;
             Destroy(gameObject);
         }
     }

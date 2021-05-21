@@ -7,6 +7,7 @@ public class DigitalDisplay : MonoBehaviour
 {
     [SerializeField] private Sprite[] digits;
     [SerializeField] private Image[] characters;
+    [SerializeField] private DollHouseObject dollhouse;
 
     private string codeSequence;
 
@@ -82,6 +83,9 @@ public class DigitalDisplay : MonoBehaviour
                     CheckResults();
                 }
                 break;
+            case "Close":
+                dollhouse.CloseLockGUI();
+                break;
         }
         
     }
@@ -121,11 +125,10 @@ public class DigitalDisplay : MonoBehaviour
     {
         if (codeSequence == "0385")
         {
-            Debug.Log("Correct!");
+            dollhouse.OpenDollHouse();
         }
         else
         {
-            Debug.Log("Wrong!");
             ResetDisplay();
         }
     }

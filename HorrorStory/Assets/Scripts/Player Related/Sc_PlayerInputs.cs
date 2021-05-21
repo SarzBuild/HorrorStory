@@ -25,6 +25,7 @@ public class Sc_PlayerInputs : MonoBehaviour
         }
 
         Time.timeScale = 1;
+        
     }
 
     public bool GetMovingUp()

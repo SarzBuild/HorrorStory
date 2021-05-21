@@ -37,8 +37,9 @@ public class Mannequin : MonoBehaviour
         {
             timeToNextSoundEffect -= Time.deltaTime;
         }
-        transform.position =  Vector3.MoveTowards(transform.position, goal.position, speed * Time.deltaTime);
-        //agent.SetDestination(goal.position);
+        //transform.position =  Vector3.MoveTowards(transform.position, goal.position, speed * Time.deltaTime);
+        //transform.LookAt(goal);
+        agent.SetDestination(goal.position);
 
     }
 }

@@ -17,6 +17,7 @@ public class LocationController : MonoBehaviour
         corridors2, 
         corridors3, 
         corridors4,
+        corridors5,
     }
     public static Location previousLocation;
     public static Location currentLocation; 

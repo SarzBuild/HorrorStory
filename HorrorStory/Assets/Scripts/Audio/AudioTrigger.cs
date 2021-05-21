@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace UnityCore
@@ -64,23 +64,23 @@ namespace UnityCore
                         break;
 
                     case LocationController.Location.corridors:
-                       // audioManager.EnterCorridors(1);
+                        audioManager.EnterCorridors(1);
 
                         break;
                     case LocationController.Location.corridors2:
-                        //audioManager.EnterCorridors(2);
+                        audioManager.EnterCorridors(2);
 
                         break;
                     case LocationController.Location.corridors3:
-                       // audioManager.EnterCorridors(3);
+                        audioManager.EnterCorridors(3);
 
                         break;
                     case LocationController.Location.corridors4:
-                       // audioManager.EnterCorridors(4);
+                        audioManager.EnterCorridors(4);
 
                         break;
                     case LocationController.Location.corridors5:
-                       // audioManager.EnterCorridors(5);
+                        audioManager.EnterCorridors(5);
 
                         break;
                 }
@@ -98,19 +98,18 @@ namespace UnityCore
                         audioManager.LeaveLivingRoom();
                         break;
                     case LocationController.Location.corridors:
-                       // audioManager.LeaveCorridors(1);
                         break;
                     case LocationController.Location.corridors2:
-                      //  audioManager.LeaveCorridors(2);
 
                         break;
                     case LocationController.Location.corridors3:
-                       // audioManager.LeaveCorridors(3);
 
                         break;
                     case LocationController.Location.corridors4:
-                       // audioManager.LeaveCorridors(4);
-
+                        audioManager.StopSound(AudioType.Grandfather_thumping);
+                        audioManager.StopSound(AudioType.SecondClockNoise);
+                        audioManager.StopSound(AudioType.ThirdClockNoise);
+                        audioManager.StopSound(AudioType.ForthClockNoise);
                         break;
                     case LocationController.Location.corridors5:
                        // audioManager.LeaveCorridors(5);

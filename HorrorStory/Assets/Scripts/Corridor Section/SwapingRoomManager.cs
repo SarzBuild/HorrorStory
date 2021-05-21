@@ -19,6 +19,7 @@ public class SwapingRoomManager : MonoBehaviour
     public GameObject endOfLevelRoom;
     public float endOfLevelRoomDimention;
     public float swappingRoomDimention = 4.3f;
+    public float doorOffset = 0.6f;
     public GameObject[] prefabs;
     private int currentPrefabIndex;
 
@@ -100,6 +101,7 @@ public class SwapingRoomManager : MonoBehaviour
 
         if (roomLevelIsComplete) return;
 
+        doorTransform.position += -doorTransform.right * doorOffset; 
 
         GameObject roomPrefab = prefabs[currentPrefabIndex];
         Vector3 currentDoorPosition = doorTransform.position;
@@ -127,8 +129,8 @@ public class SwapingRoomManager : MonoBehaviour
         Vector3 currentDoorPosition = doorTransform.position;
         Quaternion currentDoorRotation = doorTransform.rotation;
         GameObject finalRoom = Instantiate(endOfLevelRoom) as GameObject;
-        finalRoom.transform.rotation = currentDoorRotation;
-        finalRoom.transform.position = doorTransform.position + doorTransform.forward * endOfLevelRoomDimention;
+        finalRoom.transform.rotation = Quaternion.Euler(0, currentDoorRotation.eulerAngles.y + 180.0f, 0);
+        finalRoom.transform.position = new Vector3(doorTransform.position.x, firstRoomTransform.position.y, doorTransform.position.z) - doorTransform.forward * swappingRoomDimention;
         rooms.Enqueue(finalRoom);
         if (rooms.Count > 4)
         {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MirrorObject : Interactable
+public class MirrorObject : Interactable 
 {
     //We get the player references to update some values
     private Sc_PlayerReferences playerReferences;
@@ -42,7 +42,6 @@ public class MirrorObject : Interactable
             return "Left Click to destroy the mirror";
         }
         return "";
-
     }
     
     //If there's an interaction, we call our functions
@@ -58,11 +57,9 @@ public class MirrorObject : Interactable
             } else
             {
                 GameActions.WrongMirror();
+                BreakMirror();
             }
-
-        } 
-
-
+        }
     }
 
     public override bool Invisible()

@@ -7,6 +7,7 @@ public class LensObject : Interactable
     //We get the player references to update some values
     private Sc_PlayerReferences playerReferences;
     [SerializeField] private bool invisible;
+    [SerializeField] private Door bathroomDoor;
     private void Start()
     {
         playerReferences = Sc_PlayerReferences.Instance;
@@ -16,6 +17,7 @@ public class LensObject : Interactable
     {
         playerReferences.hasLens = true;
         playerReferences.firstUseLens = true;
+        GameActions.enterBathroom(bathroomDoor);
         Destroy(gameObject);
     }
 

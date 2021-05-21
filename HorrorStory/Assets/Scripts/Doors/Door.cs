@@ -84,7 +84,7 @@ public class Door : Interactable
 
         if (triggerType == TriggerTypes.bathroomDoor)// && LocationController.currentLocation == LocationController.Location.bathRoom)
         {
-            GameActions.enterBathroom(this);
+            //GameActions.enterBathroom(this);
         }
         canBeOpened = true;
         AudioAction.PlaySound(closeDoor);
@@ -97,6 +97,7 @@ public class Door : Interactable
     {
         if (canBeOpened)
         {
+            if (!canBeOpened) return "Door is locked";
             return "Left click to open door.";
         }
         else
