@@ -203,9 +203,11 @@ public class Sc_PlayerController : MonoBehaviour
                 if (playerReferences.lensShowing)
                 {
                     AudioAction.PlaySound(UnityCore.Audio.AudioType.UseLense);
+                    AudioAction.playTVAudio();
                 } else
                 {
                     AudioAction.PlaySound(UnityCore.Audio.AudioType.PutAwayLense);
+                    AudioAction.stopTVAudio();
                 }
 
             }
