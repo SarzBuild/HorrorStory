@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using UnityCore.Audio;
 public abstract class Interactable : MonoBehaviour
 {
     //Setting the enum for different type of interaction

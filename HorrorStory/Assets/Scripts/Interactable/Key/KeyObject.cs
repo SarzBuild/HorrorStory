@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityCore.Audio;
 
 public class KeyObject : Interactable
 {
@@ -16,6 +17,7 @@ public class KeyObject : Interactable
     void GetKey()
     {
         Destroy(gameObject);
+        AudioAction.PlaySound(UnityCore.Audio.AudioType.PickUp);
         doorToOpen.canBeOpened = true;
     }
 

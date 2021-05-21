@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
+using UnityCore.Audio;
 
 public class Sc_PlayerController : MonoBehaviour
 {
@@ -197,7 +198,18 @@ public class Sc_PlayerController : MonoBehaviour
         {
             //If the player right clicks, it updates if the lens if showing or not
             if (playerInputs.GetRightClick())
+            {
                 playerReferences.lensShowing = !playerReferences.lensShowing;
+                if (playerReferences.lensShowing)
+                {
+                    AudioAction.PlaySound(UnityCore.Audio.AudioType.UseLense);
+                } else
+                {
+                    AudioAction.PlaySound(UnityCore.Audio.AudioType.PutAwayLense);
+                }
+
+            }
+            
             
             //If it is supposed to show, we set the lens to active, otherwise its not active
             if (playerReferences.lensShowing)
@@ -224,6 +236,7 @@ public class Sc_PlayerController : MonoBehaviour
         playerReferences.isDead = true;
         playerInputs.SetLockPlayer();
         playerInputs.SetLockPlayerCursorVisibility();
+        AudioAction.PlaySoundAfterDelay(UnityCore.Audio.AudioType.StartCutscene,2.0f);
         //playerReferences.isInCutscene = true;
         ActivateDeathUIScreen();
     }

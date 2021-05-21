@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityCore.Audio;
+
 
 public class LensObject : Interactable
 {
@@ -15,9 +17,11 @@ public class LensObject : Interactable
 
     void GetLens()
     {
+        
         playerReferences.hasLens = true;
         playerReferences.firstUseLens = true;
         GameActions.enterBathroom(bathroomDoor);
+        AudioAction.PlaySound(UnityCore.Audio.AudioType.PickUp);
         Destroy(gameObject);
     }
 

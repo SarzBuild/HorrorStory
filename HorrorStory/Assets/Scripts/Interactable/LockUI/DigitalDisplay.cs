@@ -125,11 +125,14 @@ public class DigitalDisplay : MonoBehaviour
     {
         if (codeSequence == "0385")
         {
+            UnityCore.Audio.AudioAction.PlaySound(UnityCore.Audio.AudioType.UI_Code_Sucess);
             dollhouse.OpenDollHouse();
         }
         else
         {
             ResetDisplay();
+            UnityCore.Audio.AudioAction.PlaySound(UnityCore.Audio.AudioType.UI_Code_Fail);
+
         }
     }
 

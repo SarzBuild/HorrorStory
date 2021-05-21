@@ -54,7 +54,9 @@ namespace UnityCore
                         audioManager.EnterBathroom();
 
                           break;
-
+                    case LocationController.Location.bathRoom_before_after:
+                        audioManager.EnterNormalBathroom();
+                        break;
                     case LocationController.Location.hallway:
                         HallwayTransition();
                         break;
@@ -83,6 +85,9 @@ namespace UnityCore
                         audioManager.EnterCorridors(5);
 
                         break;
+                    case LocationController.Location.endOfLevel:
+                        audioManager.EndOfLevel();
+                        break;
                 }
             }
 
@@ -93,7 +98,9 @@ namespace UnityCore
                     case LocationController.Location.bathRoom:
                         audioManager.LeaveBathroom();
                         break;
-                  
+                    case LocationController.Location.bathRoom_before_after:
+                        audioManager.LeaveBathroom();
+                        break;
                     case LocationController.Location.livingRoom:
                         audioManager.LeaveLivingRoom();
                         break;

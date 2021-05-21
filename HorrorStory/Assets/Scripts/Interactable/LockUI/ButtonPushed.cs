@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityCore.Audio;
 public class ButtonPushed : MonoBehaviour
 {
     public static event Action<string> ButtonPressed = delegate { };
@@ -22,6 +22,7 @@ public class ButtonPushed : MonoBehaviour
 
     private void ButtonClicked()
     {
+        AudioAction.PlaySound(UnityCore.Audio.AudioType.buttonPress);
         ButtonPressed(buttonValue);
     }
 }

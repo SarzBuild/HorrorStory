@@ -18,7 +18,7 @@ namespace UnityCore
             public static Action StartMannequinSound;
             public static Action WalkingAudio;
             public static Action LivingRoomStart;
-
+            public static Action <AudioType, float> PlaySoundAfterDelay;
 
         }
         public class AudioManager : MonoBehaviour
@@ -27,6 +27,8 @@ namespace UnityCore
             private float timeToNextStep = 0.0f;
             public float stepTime = 0.25f;
             public float scaryThemeTime = 0.0f;
+            public SpawnMannequin mannequinSpawner;
+
 
             private void Awake()
             {
@@ -40,6 +42,7 @@ namespace UnityCore
                 AudioAction.StartMannequinSound += StartMannequin;
                 AudioAction.WalkingAudio += FootstepsAudio;
                 AudioAction.LivingRoomStart += EnterLivingRoom;
+                AudioAction.PlaySoundAfterDelay += PlaySoundAfterDelay;
             }
 
             private void OnDisable()
@@ -50,9 +53,15 @@ namespace UnityCore
                 AudioAction.StartMannequinSound -= StartMannequin;
                 AudioAction.WalkingAudio -= FootstepsAudio;
                 AudioAction.LivingRoomStart -= EnterLivingRoom;
+                AudioAction.PlaySoundAfterDelay -= PlaySoundAfterDelay;
 
 
 
+            }
+
+            public void Update()
+            {
+                
             }
             private void FootstepsAudio()
             {
@@ -90,6 +99,15 @@ namespace UnityCore
                 audioController.PlayAudio(audioType, false, 0.00f);
             }
 
+            IEnumerator delaySFX(AudioType audioType, float time)
+            {
+                yield return new WaitForSeconds(time);
+                PlaySound(audioType);
+            }
+            public void PlaySoundAfterDelay(AudioType audioType, float delay)
+            {
+                StartCoroutine(delaySFX(audioType, delay));
+            }
             public void StopSound(AudioType audioType)
             {
                 audioController.StopAudio(audioType, false, 0.00f);
@@ -100,7 +118,12 @@ namespace UnityCore
                 audioController.StopAudio(AudioType.SFX_Bathroom_Tap, true, 0.00f);
                 EnterHallway();
             }
+            public void EnterNormalBathroom()
+            {
+                audioController.PlayAudio(AudioType.bathroomNormal, true, 0.00f);
+                LeaveHallway();
 
+            }
             public void EnterBathroom()
             {
                 audioController.PlayAudio(AudioType.SFX_Bathroom_Tap, true, 0.00f);
@@ -122,7 +145,9 @@ namespace UnityCore
             }
             public void EnterLivingRoom()
             {
-                audioController.PlayAudio(AudioType.TVNoise, true, 0.0f);
+
+                Sc_PlayerReferences playerRef = GameObject.FindObjectOfType<Sc_PlayerReferences>();
+                if(playerRef.hasLens)  audioController.PlayAudio(AudioType.TVNoise, true, 0.0f);
                 //audioController.PlayAudio(AudioType.ST_LivingRoom_Atmosphere, true, 0.0f);
                 LeaveHallway();
             }
@@ -140,23 +165,44 @@ namespace UnityCore
 
                 switch(corridor) {
                     case 1:
+                        mannequinSpawner.SpeedUpMannequin();
+
                         LeaveHallway();
                         audioController.PlayAudio(AudioType.Grandfather_thumping, true, 0.0f);
                         break;
                     case 2:
+                        mannequinSpawner.SpeedUpMannequin();
                         audioController.PlayAudio(AudioType.SecondClockNoise, true, 0.0f);
                         break;
                     case 3:
+                        mannequinSpawner.SpeedUpMannequin();
+
                         audioController.PlayAudio(AudioType.ThirdClockNoise, true, 0.0f);
                         break;
                     case 4:
+                        mannequinSpawner.SpeedUpMannequin();
+
                         audioController.PlayAudio(AudioType.ForthClockNoise, true, 0.0f);
                         break;
                     case 5:
+                        mannequinSpawner.SpeedUpMannequin();
+
                         audioController.PlayAudio(AudioType.EndCutscene, true, 0.0f); 
                         break;
                 }
             
+
+            }
+
+            public void EndOfLevel()
+            {
+                audioController.StopAudio(AudioType.Grandfather_thumping, true, 0.0f);
+                audioController.StopAudio(AudioType.SecondClockNoise, true, 0.0f);
+                audioController.StopAudio(AudioType.ThirdClockNoise, true, 0.0f);
+                audioController.StopAudio(AudioType.ForthClockNoise, true, 0.0f);
+                mannequinSpawner.Die();
+
+
 
             }
 

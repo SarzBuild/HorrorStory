@@ -104,6 +104,8 @@ public class GameActionController : MonoBehaviour
         //bathroomDoor.CloseDoor();
         bathroomDoor.canBeOpened = false;
         water.Rise();
+        UnityCore.Audio.AudioAction.PlaySound(UnityCore.Audio.AudioType.SFX_Bathroom_Tap);
+
         Debug.Log("start");
 
     }

@@ -26,7 +26,7 @@ namespace UnityCore
             DoorOpening,
             DoorSlammingShut,
             PickupItem,
-            NOTUSED,
+            buttonPress,
             NOTUSED2,
             NOTUSED3,
             UseLense,
@@ -55,6 +55,7 @@ namespace UnityCore
             UI_Code_Fail,
             StartCutscene,
             EndCutscene,
+            bathroomNormal, 
             None,
 
         }
