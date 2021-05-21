@@ -40076,7 +40076,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7455631630273677936}
   m_Layer: 0
-  m_Name: May 19th Jers Prefab
+  m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55890,7 +55890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa80ebd2b9c68cf4a9c76dac88f43d90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.3
+  speed: 0.1
 --- !u!1 &8732887037978997152
 GameObject:
   m_ObjectHideFlags: 0
@@ -57292,6 +57292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stepTime: 1
   scaryThemeTime: 0
+  mannequinSpawner: {fileID: 8837419315909619792}
   audioController: {fileID: 8837419316998553454}
 --- !u!114 &8837419316998553451
 MonoBehaviour:
@@ -57364,6 +57365,11 @@ MonoBehaviour:
       loop: 0
     - type: 7
       clip: {fileID: 8300000, guid: 009d3d9298c3a1243b6363a769318da8, type: 3}
+      volume: 0.4
+      pitch: 1
+      loop: 1
+    - type: 47
+      clip: {fileID: 8300000, guid: 297e6e3cc3012b64291f3989782d7b4f, type: 3}
       volume: 0.4
       pitch: 1
       loop: 1
@@ -57472,6 +57478,11 @@ MonoBehaviour:
       volume: 1
       pitch: 1
       loop: 1
+    - type: 45
+      clip: {fileID: 8300000, guid: 0773cea5a191b7442a5097b2b02c8d67, type: 3}
+      volume: 0.58
+      pitch: 1
+      loop: 1
   - source: {fileID: 8837419317667547500}
     audio:
     - type: 13
@@ -57505,16 +57516,31 @@ MonoBehaviour:
     audio:
     - type: 21
       clip: {fileID: 8300000, guid: 19124e66ae9865348b6bb5e195528029, type: 3}
-      volume: 0.16
+      volume: 0.63
       pitch: 1
       loop: 0
     - type: 22
       clip: {fileID: 8300000, guid: 5d4108ebb90724d4da1c604564310506, type: 3}
-      volume: 0.16
+      volume: 0.76
       pitch: 1
       loop: 0
     - type: 36
       clip: {fileID: 8300000, guid: 3b1fe2f4d7e3129418e1a239123c421f, type: 3}
+      volume: 0.16
+      pitch: 1
+      loop: 0
+    - type: 43
+      clip: {fileID: 8300000, guid: 01cb2defcfbef8244ba5294bf256eefc, type: 3}
+      volume: 0.16
+      pitch: 1
+      loop: 0
+    - type: 44
+      clip: {fileID: 8300000, guid: 4bb59de5ecdb7034e88408cf091d092f, type: 3}
+      volume: 0.16
+      pitch: 1
+      loop: 0
+    - type: 18
+      clip: {fileID: 8300000, guid: e2bea8157f005314882ee5c3dc8e9850, type: 3}
       volume: 0.16
       pitch: 1
       loop: 0
@@ -57724,7 +57750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b757375de90d0643a82105e2ac8d617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  location: 3
+  location: 6
 --- !u!4 &8837419317241169309
 Transform:
   m_ObjectHideFlags: 0
