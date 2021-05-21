@@ -8450,7 +8450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0891714bfee9d394589752cae2cc7260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 2.5
   soundEffects: 1c0000001d0000001e0000001f000000
 --- !u!1 &1664110327653285443
 GameObject:
