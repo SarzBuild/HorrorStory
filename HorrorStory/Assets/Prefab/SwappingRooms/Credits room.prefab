@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4174981100423158518}
   - component: {fileID: 4532403947849644439}
   - component: {fileID: 1292242967910706919}
-  - component: {fileID: 3707864530288526277}
   m_Layer: 8
   m_Name: SwapingRoom_Floor
   m_TagString: Untagged
@@ -97,18 +96,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4839167166493348850, guid: f91ab77a7593d3f4ebaba27469eadd65, type: 3}
---- !u!114 &3707864530288526277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223290364317596260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e90137740a5d21f4c9996204da626178, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1954594381693668802
 GameObject:
   m_ObjectHideFlags: 0

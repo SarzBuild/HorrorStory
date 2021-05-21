@@ -9,10 +9,13 @@ public class LivingRoomPuzzle : MonoBehaviour
     [SerializeField] GameObject roomDoor;
     public List<LivingRoomPuzzleObjects> puzzleObjects;
     public int currentObject;
+
+    public Sc_PlayerReferences playerReferences;
     // Start is called before the first frame update
     void Start()
     {
         currentObject = 0;
+        playerReferences = Sc_PlayerReferences.Instance;
     }
 
     // Update is called once per frame
@@ -22,7 +25,8 @@ public class LivingRoomPuzzle : MonoBehaviour
     }
     public void HandleInteraction()
     {
-        EnableInterationWithObject();
+        if(playerReferences.hasLens)
+            EnableInterationWithObject();
     }
     void EnableInterationWithObject()
     {
@@ -45,25 +49,25 @@ public class LivingRoomPuzzle : MonoBehaviour
 
         if (currentObject == 0)
         {
-            clueText.text = "Mom, help! It's so dark in here";
+            clueText.text = "Mom, help! It's so dark in here 0/4";
         }
         else if (currentObject == 1)
         {
-            clueText.text = "Just.... Seek knowledge";
+            clueText.text = "Just... Seek knowledge 1/4";
         }
         else if (currentObject == 2)
         {
-            clueText.text = "This living room looks so small";
+            clueText.text = "This living room looks so small 2/4";
         }
         else if (currentObject == 3)
         {
-            clueText.text = "Flush down your fears";
+            clueText.text = "Flush down your fears 3/4";
         }
         else if (currentObject == 4)
         {
             //next line is for testing purposes
             //GameObject.Find("DollHouse").GetComponent<Animator>().SetBool("mustOpen", true);
-            clueText.text = "Scare away the darkness of the end";
+            clueText.text = "Scare away the darkness in the place between 4/4";
         }
         else if (currentObject == 5)
         {

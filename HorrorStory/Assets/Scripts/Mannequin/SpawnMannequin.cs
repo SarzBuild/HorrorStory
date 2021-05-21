@@ -13,13 +13,12 @@ public class SpawnMannequin : MonoBehaviour
     public void SpeedUpMannequin()
     {
         mannequin.SpeedUp();
-
-
     }
 
     public void Die()
     {
-        Destroy(mannequin.gameObject);
+        if(mannequin != null)
+            Destroy(mannequin.gameObject);
     }
     private void OnTriggerEnter(Collider other)
     {

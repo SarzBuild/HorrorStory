@@ -230,11 +230,14 @@ namespace UnityCore
 
             public void EndOfLevel()
             {
-                audioController.StopAudio(AudioType.Grandfather_thumping, true, 0.0f);
-                audioController.StopAudio(AudioType.SecondClockNoise, true, 0.0f);
-                audioController.StopAudio(AudioType.ThirdClockNoise, true, 0.0f);
-                audioController.StopAudio(AudioType.ForthClockNoise, true, 0.0f);
-                mannequinSpawner.Die();
+                if (mannequinSpawner != null)
+                {
+                    audioController.StopAudio(AudioType.Grandfather_thumping, true, 0.0f);
+                    audioController.StopAudio(AudioType.SecondClockNoise, true, 0.0f);
+                    audioController.StopAudio(AudioType.ThirdClockNoise, true, 0.0f);
+                    audioController.StopAudio(AudioType.ForthClockNoise, true, 0.0f);
+                    mannequinSpawner.Die();
+                }
 
 
 
