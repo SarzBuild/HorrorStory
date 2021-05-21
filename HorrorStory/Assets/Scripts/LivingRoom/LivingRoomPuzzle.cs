@@ -41,29 +41,29 @@ public class LivingRoomPuzzle : MonoBehaviour
     }
     void HandleClue()
     {
-        Text clueText = clueObj.GetComponentInChildren<Text>();
+        TMPro.TextMeshProUGUI clueText = clueObj.GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
         if (currentObject == 0)
         {
-            clueText.text = "HELP!";
+            clueText.text = "Mom, help! It's so dark in here";
         }
         else if (currentObject == 1)
         {
-            clueText.text = "The first number is\nin a place to relax\nbut you must get there\nbefore the end of the wax";
+            clueText.text = "Just.... Seek knowledge";
         }
         else if (currentObject == 2)
         {
-            clueText.text = "The second number is\nwhere you can have some fun\nhave some good laughts\nbut you son is being pointed a gun";
+            clueText.text = "This living room looks so small";
         }
         else if (currentObject == 3)
         {
-            clueText.text = "The third number is\nin an object that creates light\nit will keep you safe\njust hope it works all night...";
+            clueText.text = "Flush down your fears";
         }
         else if (currentObject == 4)
         {
             //next line is for testing purposes
-            GameObject.Find("DollHouse").GetComponent<Animator>().SetBool("mustOpen", true);
-            clueText.text = "Once upon a time\nI lost my spouse\ntogether with my kids\nin my own... ";
+            //GameObject.Find("DollHouse").GetComponent<Animator>().SetBool("mustOpen", true);
+            clueText.text = "Scare away the darkness of the end";
         }
         else if (currentObject == 5)
         {
