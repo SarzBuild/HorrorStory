@@ -190,6 +190,96 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1575836602650892458
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3853315194693357207}
+  m_Layer: 0
+  m_Name: AUDIO TRIGGER
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3853315194693357207
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575836602650892458}
+  m_LocalRotation: {x: 0, y: 0.4383711, z: 0, w: 0.89879405}
+  m_LocalPosition: {x: -4.74, y: 5.27, z: 4.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 272511087489619273}
+  - {fileID: 6531656088489377943}
+  m_Father: {fileID: 7388178193450148131}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 52, z: 0}
+--- !u!1 &1653604398472816474
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6531656088489377943}
+  - component: {fileID: 116907197730293078}
+  - component: {fileID: 6820381107044447922}
+  m_Layer: 0
+  m_Name: Set Area 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6531656088489377943
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653604398472816474}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.27, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1.4442, z: 2.7155426}
+  m_Children: []
+  m_Father: {fileID: 3853315194693357207}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &116907197730293078
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653604398472816474}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.37450236, y: 3.4694653, z: 1}
+  m_Center: {x: 0.04800442, y: 0.13406181, z: 0}
+--- !u!114 &6820381107044447922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653604398472816474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b757375de90d0643a82105e2ac8d617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  location: 12
 --- !u!1 &1954594381693668802
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,6 +538,7 @@ MonoBehaviour:
   closeDoor: 16
   unlockDoor: 13
   triggerType: 1
+  isOpen: 0
 --- !u!1 &2909431767178913646
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,6 +621,66 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3014018246467963274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 272511087489619273}
+  - component: {fileID: 7316044292296634964}
+  - component: {fileID: 7327151105200169544}
+  m_Layer: 0
+  m_Name: Audio Transition Corridros
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &272511087489619273
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3014018246467963274}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.04, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1.4442, z: 2.7155426}
+  m_Children: []
+  m_Father: {fileID: 3853315194693357207}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7316044292296634964
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3014018246467963274}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.37450236, y: 3.4694653, z: 1}
+  m_Center: {x: 0.04800442, y: 0.13406181, z: 0}
+--- !u!114 &7327151105200169544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3014018246467963274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0770e3085ce252d44904350ee3ef9e99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manualTrigger: 0
+  triggerType: 0
+  audioEventSound: 0
 --- !u!1 &3095116683394698802
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,6 +798,7 @@ MonoBehaviour:
   closeDoor: 16
   unlockDoor: 13
   triggerType: 3
+  isOpen: 0
 --- !u!1 &3435457652218249631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1259,6 +1411,7 @@ Transform:
   m_Children:
   - {fileID: 5258689854402248386}
   - {fileID: 4106377632322964303}
+  - {fileID: 3853315194693357207}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
