@@ -20,6 +20,9 @@ namespace UnityCore
             public static Action LivingRoomStart;
             public static Action <AudioType, float> PlaySoundAfterDelay;
 
+            public static Action playTVAudio;
+            public static Action stopTVAudio;
+
         }
         public class AudioManager : MonoBehaviour
         {
@@ -27,6 +30,7 @@ namespace UnityCore
             private float timeToNextStep = 0.0f;
             public float stepTime = 0.25f;
             public float scaryThemeTime = 0.0f;
+            public float tvAudioTime = 0.0f;
             public SpawnMannequin mannequinSpawner;
 
 
@@ -43,6 +47,9 @@ namespace UnityCore
                 AudioAction.WalkingAudio += FootstepsAudio;
                 AudioAction.LivingRoomStart += EnterLivingRoom;
                 AudioAction.PlaySoundAfterDelay += PlaySoundAfterDelay;
+                AudioAction.playTVAudio += PlayTVAudio;
+                AudioAction.stopTVAudio += StopTVAudio;
+
             }
 
             private void OnDisable()
@@ -54,7 +61,8 @@ namespace UnityCore
                 AudioAction.WalkingAudio -= FootstepsAudio;
                 AudioAction.LivingRoomStart -= EnterLivingRoom;
                 AudioAction.PlaySoundAfterDelay -= PlaySoundAfterDelay;
-
+                AudioAction.playTVAudio -= PlayTVAudio;
+                AudioAction.stopTVAudio -= StopTVAudio;
 
 
             }
@@ -146,15 +154,41 @@ namespace UnityCore
             public void EnterLivingRoom()
             {
 
-                Sc_PlayerReferences playerRef = GameObject.FindObjectOfType<Sc_PlayerReferences>();
-                if(playerRef.hasLens)  audioController.PlayAudio(AudioType.TVNoise, true, 0.0f);
                 //audioController.PlayAudio(AudioType.ST_LivingRoom_Atmosphere, true, 0.0f);
                 LeaveHallway();
             }
 
+            public void PlayTVAudio()
+            {
+                //Sc_PlayerReferences playerRef = GameObject.FindObjectOfType<Sc_PlayerReferences>();
+                if (LocationController.currentLocation == LocationController.Location.livingRoom)
+                {
+                    audioController.PlayAudio(AudioType.TVNoise, true, 0.0f);
+                    audioController.SeekAudio(AudioType.TVNoise, tvAudioTime);
+                    
+                }
+
+            }
+
+            public void StopTVAudio()
+            {
+                //Sc_PlayerReferences playerRef = GameObject.FindObjectOfType<Sc_PlayerReferences>();
+                if (LocationController.currentLocation == LocationController.Location.livingRoom)
+                {
+                    tvAudioTime = audioController.GetAudioTime(AudioType.TVNoise);
+                    audioController.StopAudio(AudioType.TVNoise, false, 0.0f);
+                }
+
+
+            }
             public void LeaveLivingRoom()
             {
-                audioController.StopAudio(AudioType.TVNoise, true, 0.0f);
+                Sc_PlayerReferences playerRef = GameObject.FindObjectOfType<Sc_PlayerReferences>();
+                if (playerRef.lensShowing)
+                {
+                    tvAudioTime = audioController.GetAudioTime(AudioType.TVNoise);
+                    audioController.StopAudio(AudioType.TVNoise, true, 0.0f);
+                }
                 //audioController.StopAudio(AudioType.ST_LivingRoom_Atmosphere, true, 0.0f);
                 EnterHallway();
             }
